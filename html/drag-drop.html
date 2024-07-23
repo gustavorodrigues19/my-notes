@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drago and Drop</title>
+    <style>
+      .drag-drop {
+        display: flex;
+        width: 20rem;
+        height: 20rem;
+        padding: 10px;
+        border: 1px solid #aaaaaa;
+      }
+      #square-blue {
+        height: 5rem;
+        width: 5rem;
+        background-color: blue;
+      }
+      #square-red {
+        height: 5rem;
+        width: 5rem;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Drag and Drop</h1>
+    <div style="display: flex">
+      <div
+        id="div1"
+        class="drag-drop"
+        ondrop="drop(event)"
+        ondragover="allowDrop(event)"
+      ></div>
+      <div
+        id="div2"
+        class="drag-drop"
+        ondrop="drop(event)"
+        ondragover="allowDrop(event)"
+      ></div>
+    </div>
+    <div id="square-blue" draggable="true" ondragstart="drag(event)"></div>
+    <div id="square-red" draggable="true" ondragstart="drag(event)"></div>
+  </body>
+  <script>
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      const data = ev.dataTransfer.getData("text");
+      ev.target.appendChild(document.getElementById(data));
+    }
+  </script>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Web Workers</h1>
+    <h2>Count numbers:<output id="result">0</output></h2>
+    <button id="start">Start Worker</button>
+    <button id="stop">Stop Worker</button>
+  </body>
+  <script>
+    if (window.Worker) {
+      const counterDisplay = document.getElementById("result");
+      const startButton = document.getElementById("start");
+      const stopButton = document.getElementById("stop");
+      let worker;
+
+      startButton.addEventListener("click", () => {
+        if (!worker) {
+          worker = new Worker("worker.js");
+          worker.onmessage = (event) => {
+            counterDisplay.textContent = event.data;
+          };
+        }
+      });
+
+      stopButton.addEventListener("click", () => {
+        if (worker) {
+          worker.terminate();
+          worker = null;
+        }
+      });
+    } else {
+      console.log("Your browser doesn't support web workers.");
+    }
+  </script>
+</html>
